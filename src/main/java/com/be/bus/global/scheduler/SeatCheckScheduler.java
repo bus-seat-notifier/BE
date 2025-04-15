@@ -65,7 +65,7 @@ public class SeatCheckScheduler {
             Element strongTag = seatDoc.selectFirst("strong");
 
             if (strongTag == null) {
-                log.info("🕒 출발: {}, 🚌 여객사: {}, 상태: ❌ 매진 or 예약 불가", time, company);
+                log.info("🕒 출발: {}, 🚌 여객사: {}, 상태: ❌ 매진 or 예약S 불가", time, company);
                 continue;
             }
 
