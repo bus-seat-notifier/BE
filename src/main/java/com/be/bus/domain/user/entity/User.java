@@ -1,13 +1,15 @@
+
+// User.java
 package com.be.bus.domain.user.entity;
 
 import com.be.bus.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder(access = AccessLevel.PRIVATE)
-@Getter
 @Entity
 @Table(name = "user")
 public class User extends BaseTimeEntity {
@@ -16,5 +18,12 @@ public class User extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 기타 필요한 사용자 필드 정의 가능
+    @Column(nullable = false)
+    private String email;
+
+    public static User create(String email) {
+        return User.builder()
+                .email(email)
+                .build();
+    }
 }

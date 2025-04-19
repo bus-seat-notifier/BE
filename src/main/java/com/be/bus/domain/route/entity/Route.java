@@ -17,14 +17,22 @@ public class Route extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
-    private String name;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "departure_terminal_id")
     private Terminal departureTerminal;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "arrival_terminal_id")
     private Terminal arrivalTerminal;
+
+    private String name;
+
+    public static Route create(Terminal departureTerminal, Terminal arrivalTerminal) {
+        String routeName = departureTerminal.getName() + "-" + arrivalTerminal.getName();
+        return Route.builder()
+                .departureTerminal(departureTerminal)
+                .arrivalTerminal(arrivalTerminal)
+                .name(routeName)
+                .build();
+    }
 }

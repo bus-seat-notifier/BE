@@ -30,6 +30,8 @@ public class QUser extends EntityPathBase<User> {
     //inherited
     public final StringPath deleteYn = _super.deleteYn;
 
+    public final StringPath email = createString("email");
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     //inherited

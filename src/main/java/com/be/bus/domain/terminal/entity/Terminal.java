@@ -16,12 +16,18 @@ import lombok.*;
 public class Terminal extends BaseTimeEntity {
 
     @Id
-    @Column(name = "id")
     private String id;
 
-    @Column(name = "name")
     private String name;
 
     @Column(name = "area_cd")
-    private String areaCd;
+    private String areaCode;
+
+    public static Terminal create(String id, String name, String areaCode) {
+        return Terminal.builder()
+                .id(id)
+                .name(name)
+                .areaCode(areaCode)
+                .build();
+    }
 }

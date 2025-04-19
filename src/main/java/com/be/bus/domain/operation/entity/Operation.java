@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder(access = AccessLevel.PRIVATE)
@@ -21,13 +22,22 @@ public class Operation extends BaseTimeEntity {
     @Column(name = "departure_dtm")
     private LocalDateTime departureDateTime;
 
-    @Column(name = "bus_company")
-    private String busCompany;
+    @Column(name = "field2")
+    private String operator;
 
     @Column(name = "bus_type")
     private String busType;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "route_id")
     private Route route;
+
+    public static Operation create(LocalDateTime departureDateTime, String operator, String busType, Route route) {
+        return Operation.builder()
+                .departureDateTime(departureDateTime)
+                .operator(operator)
+                .busType(busType)
+                .route(route)
+                .build();
+    }
 }

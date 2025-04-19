@@ -1,4 +1,4 @@
-package com.be.bus.domain.alertRegisterInfo.entity;
+package com.be.bus.domain.alert.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -16,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QAlertRegisterSeatInfo extends EntityPathBase<AlertRegisterSeatInfo> {
 
-    private static final long serialVersionUID = -1390068890L;
+    private static final long serialVersionUID = 538041047L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
@@ -24,7 +24,7 @@ public class QAlertRegisterSeatInfo extends EntityPathBase<AlertRegisterSeatInfo
 
     public final com.be.bus.global.entity.QBaseTimeEntity _super = new com.be.bus.global.entity.QBaseTimeEntity(this);
 
-    public final com.be.bus.domain.alertRegisterSeatInfo.entity.QAlertRegisterInfo alertRegisterInfo;
+    public final QAlertRegisterInfo alertRegisterInfo;
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
@@ -37,7 +37,7 @@ public class QAlertRegisterSeatInfo extends EntityPathBase<AlertRegisterSeatInfo
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final StringPath seatNumber = createString("seatNumber");
+    public final StringPath seatType = createString("seatType");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
@@ -60,7 +60,7 @@ public class QAlertRegisterSeatInfo extends EntityPathBase<AlertRegisterSeatInfo
 
     public QAlertRegisterSeatInfo(Class<? extends AlertRegisterSeatInfo> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.alertRegisterInfo = inits.isInitialized("alertRegisterInfo") ? new com.be.bus.domain.alertRegisterSeatInfo.entity.QAlertRegisterInfo(forProperty("alertRegisterInfo"), inits.get("alertRegisterInfo")) : null;
+        this.alertRegisterInfo = inits.isInitialized("alertRegisterInfo") ? new QAlertRegisterInfo(forProperty("alertRegisterInfo"), inits.get("alertRegisterInfo")) : null;
     }
 
 }

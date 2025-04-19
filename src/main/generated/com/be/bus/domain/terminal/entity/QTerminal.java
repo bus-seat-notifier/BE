@@ -21,7 +21,7 @@ public class QTerminal extends EntityPathBase<Terminal> {
 
     public final com.be.bus.global.entity.QBaseTimeEntity _super = new com.be.bus.global.entity.QBaseTimeEntity(this);
 
-    public final StringPath areaCd = createString("areaCd");
+    public final StringPath areaCode = createString("areaCode");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
