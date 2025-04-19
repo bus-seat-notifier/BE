@@ -3,8 +3,8 @@ spring:
     import: classpath:application-secret.yml
 
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/honeypot
-    username: root
+    url: ${local.db.url}
+    username: ${local.db.username}
     password: ${local.db.password}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
