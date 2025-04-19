@@ -3,13 +3,14 @@ package com.be.bus.domain.alertRegisterInfo.entity;
 import com.be.bus.domain.alertRegisterSeatInfo.entity.AlertRegisterInfo;
 import com.be.bus.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder(access = AccessLevel.PRIVATE)
+@Getter
 @Entity
 @Table(name = "alert_register_seat_info")
-@Getter
-@Setter
 public class AlertRegisterSeatInfo extends BaseTimeEntity {
 
     @Id

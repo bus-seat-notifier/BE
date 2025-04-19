@@ -3,13 +3,14 @@ package com.be.bus.domain.route.entity;
 import com.be.bus.domain.terminal.entity.Terminal;
 import com.be.bus.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder(access = AccessLevel.PRIVATE)
+@Getter
 @Entity
 @Table(name = "route")
-@Getter
-@Setter
 public class Route extends BaseTimeEntity {
 
     @Id

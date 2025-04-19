@@ -3,15 +3,15 @@ package com.be.bus.domain.operation.entity;
 import com.be.bus.domain.route.entity.Route;
 import com.be.bus.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
-
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder(access = AccessLevel.PRIVATE)
+@Getter
 @Entity
 @Table(name = "operation")
-@Getter
-@Setter
 public class Operation extends BaseTimeEntity {
 
     @Id

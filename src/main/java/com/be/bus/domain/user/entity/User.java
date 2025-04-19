@@ -2,13 +2,14 @@ package com.be.bus.domain.user.entity;
 
 import com.be.bus.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder(access = AccessLevel.PRIVATE)
+@Getter
 @Entity
 @Table(name = "user")
-@Getter
-@Setter
 public class User extends BaseTimeEntity {
 
     @Id
