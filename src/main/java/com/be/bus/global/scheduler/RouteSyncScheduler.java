@@ -27,8 +27,8 @@ public class RouteSyncScheduler {
 
     private static final String URL = "https://txbus.t-money.co.kr/otck/readTrmlList.do";
 
-    //@Scheduled(cron = "0 0 3 * * *") // 매일 새벽 3시 실행
-    @Scheduled(fixedDelay = 100000) // 테스트용
+    @Scheduled(cron = "0 0 3 * * *") // 매일 새벽 3시 실행
+    //@Scheduled(fixedDelay = 100000) // 테스트용
     public void syncRoutes() {
         log.info("🚌 노선 동기화 시작!");
 
