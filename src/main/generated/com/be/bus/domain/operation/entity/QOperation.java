@@ -24,6 +24,8 @@ public class QOperation extends EntityPathBase<Operation> {
 
     public final com.be.bus.global.entity.QBaseTimeEntity _super = new com.be.bus.global.entity.QBaseTimeEntity(this);
 
+    public final StringPath busCompany = createString("busCompany");
+
     public final StringPath busType = createString("busType");
 
     //inherited
@@ -37,9 +39,9 @@ public class QOperation extends EntityPathBase<Operation> {
 
     public final DateTimePath<java.time.LocalDateTime> departureDateTime = createDateTime("departureDateTime", java.time.LocalDateTime.class);
 
-    public final NumberPath<Long> id = createNumber("id", Long.class);
+    public final StringPath duration = createString("duration");
 
-    public final StringPath operator = createString("operator");
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final com.be.bus.domain.route.entity.QRoute route;
 

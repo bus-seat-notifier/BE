@@ -22,8 +22,11 @@ public class Operation extends BaseTimeEntity {
     @Column(name = "departure_dtm")
     private LocalDateTime departureDateTime;
 
-    @Column(name = "field2")
-    private String operator;
+    @Column(name = "bus_company")
+    private String busCompany;
+
+    @Column(name = "duration")
+    private String duration;
 
     @Column(name = "bus_type")
     private String busType;
@@ -32,12 +35,14 @@ public class Operation extends BaseTimeEntity {
     @JoinColumn(name = "route_id")
     private Route route;
 
-    public static Operation create(LocalDateTime departureDateTime, String operator, String busType, Route route) {
+    public static Operation create(LocalDateTime departureDateTime, String busCompany, String duration, String busType, Route route) {
         return Operation.builder()
                 .departureDateTime(departureDateTime)
-                .operator(operator)
+                .busCompany(busCompany)
+                .duration(duration)
                 .busType(busType)
                 .route(route)
                 .build();
     }
+
 }
