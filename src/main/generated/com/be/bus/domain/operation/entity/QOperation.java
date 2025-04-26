@@ -43,6 +43,8 @@ public class QOperation extends EntityPathBase<Operation> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
+    public final NumberPath<Integer> price = createNumber("price", Integer.class);
+
     public final com.be.bus.domain.route.entity.QRoute route;
 
     //inherited

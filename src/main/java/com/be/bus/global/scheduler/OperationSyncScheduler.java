@@ -6,7 +6,7 @@ import com.be.bus.domain.route.entity.Route;
 import com.be.bus.domain.route.helper.RouteHelper;
 import com.be.bus.domain.terminal.entity.Terminal;
 import com.be.bus.domain.terminal.helper.TerminalHelper;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -24,10 +24,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -35,106 +33,112 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OperationSyncScheduler {
 
+    private final TerminalHelper terminalHelper;
     private final RouteHelper routeHelper;
     private final OperationHelper operationHelper;
-    private final TerminalHelper terminalHelper;
     private final RestTemplate restTemplate = new RestTemplate();
 
-    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm");
+    private static final String URL = "https://txbus.t-money.co.kr/otck/readAlcnList.do";
 
-    private static final List<RoutePair> ROUTES = List.of(
-            new RoutePair("5325101", "0671801", "거제(고현)", "서울남부"),
-            new RoutePair("0671801", "5325101", "서울남부", "거제(고현)")
-    );
-
-    //@Scheduled(cron = "0 0 4 * * *") // 매일 새벽 4시
-    @Scheduled(fixedDelay = 10000000) // 테스트용
+    // 테스트용
+    @Scheduled(fixedDelay = 10000000)
+    //@Scheduled(cron = "0 0 4 * * *") // 매일 새벽 4시 실행
     @Transactional
     public void syncOperations() {
-        log.info("🚌 운행정보 동기화 시작!");
+        log.info("\uD83D\uDE8C 운행정보 동기화 시작!");
+
+        List<RouteTarget> targets = List.of(
+                new RouteTarget("5325101", "0671801"),
+                new RouteTarget("0671801", "5325101")
+        );
 
         LocalDate today = LocalDate.now();
-        int totalInserted = 0;
 
-        for (RoutePair routePair : ROUTES) {
-            Terminal departureTerminal = terminalHelper.findByIdOrElseThrow(routePair.getDepartureId());
-            Terminal arrivalTerminal = terminalHelper.findByIdOrElseThrow(routePair.getArrivalId());
-            Route route = routeHelper.findByDepartureAndArrival(departureTerminal, arrivalTerminal);
+        for (RouteTarget target : targets) {
+            Terminal dep = terminalHelper.findByIdOrElseThrow(target.getDepartureId());
+            Terminal arr = terminalHelper.findByIdOrElseThrow(target.getArrivalId());
+            Route route = routeHelper.findByDepartureAndArrival(dep, arr);
+            int totalInserted = 0;
 
-            for (int i = 0; i < 30; i++) {
+            for (int i = 0; i < 20; i++) {
                 LocalDate targetDate = today.plusDays(i);
-                List<OperationInfo> operations = fetchOperations(routePair, targetDate);
+                List<OperationInfo> operationInfos = fetchOperations(target, targetDate);
 
-                int dayInserted = 0;
-                for (OperationInfo op : operations) {
-                    if (operationHelper.existsByRouteAndDepartureDateTime(route, op.getDepartureDateTime())) {
-                        continue;
+                int inserted = 0;
+
+                for (OperationInfo info : operationInfos) {
+                    boolean exists = operationHelper.existsByRouteAndDepartureDateTime(route, info.getDepartureDateTime());
+                    if (!exists) {
+                        operationHelper.saveOperation(info.toEntity(route));
+                        inserted++;
+                        totalInserted++;
                     }
-                    operationHelper.saveOperation(op.toEntity(route));
-                    dayInserted++;
-                    totalInserted++;
                 }
 
-                // ✅ 노선이름 만들고 로그 남기기
-                String routeName = route.getDepartureTerminal().getName() + " - " + route.getArrivalTerminal().getName();
-
-                log.info("✅ [{}] {} (Route ID: {}) 운행정보 {}건 삽입 완료",
-                        targetDate, routeName, route.getId(), dayInserted);
+                log.info("\u2705 [{}] {} - {} (Route ID: {}) 운행정보 {}건 삽입 완료",
+                        targetDate, dep.getName(), arr.getName(), route.getId(), inserted);
             }
-        }
+            log.info("🎯 {} - {} 운행정보 전체 동기화 완료: 총 {}건 추가됨", dep.getName(), arr.getName(), totalInserted);
 
-        log.info("🎯 운행정보 전체 동기화 완료: 총 {}건 추가됨", totalInserted);
+        }
+        log.info("🎯🎯운행정보 전체 동기화 완료");
+
     }
 
-    private List<OperationInfo> fetchOperations(RoutePair routePair, LocalDate date) {
-        MultiValueMap<String, String> payload = new LinkedMultiValueMap<>();
-        payload.add("depr_Trml_Cd", routePair.getDepartureId());
-        payload.add("arvl_Trml_Cd", routePair.getArrivalId());
-        payload.add("depr_Trml_Nm", routePair.getDepartureName());
-        payload.add("arvl_Trml_Nm", routePair.getArrivalName());
-        payload.add("depr_Dt", date.toString());
-        payload.add("bef_Aft_Dvs", "D");
-        payload.add("req_Rec_Num", "200"); // 요청페이지네이션 무시
-        payload.add("depr_Time", "00:00");
-        payload.add("ig", "1");
-        payload.add("im", "0");
-        payload.add("ic", "0");
-        payload.add("iv", "0");
+    private List<OperationInfo> fetchOperations(RouteTarget target, LocalDate date) {
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("depr_Trml_Cd", target.getDepartureId());
+        params.add("arvl_Trml_Cd", target.getArrivalId());
+        params.add("depr_Trml_Nm", "");
+        params.add("arvl_Trml_Nm", "");
+        params.add("depr_Dt", date.format(DateTimeFormatter.ofPattern("yyyyMMdd")));
+        params.add("bef_Aft_Dvs", "D");
+        params.add("req_Rec_Num", "999");
+        params.add("depr_Time", "00:00");
+        params.add("ig", "1");
+        params.add("im", "0");
+        params.add("ic", "0");
+        params.add("iv", "0");
 
         try {
-            String html = restTemplate.postForObject("https://txbus.t-money.co.kr/otck/readAlcnList.do", payload, String.class);
+            String html = restTemplate.postForObject(URL, params, String.class);
             Document doc = Jsoup.parse(html);
             Elements rows = doc.select("table tbody tr");
 
-            List<OperationInfo> list = new ArrayList<>();
+            List<OperationInfo> result = new ArrayList<>();
+
             for (Element row : rows) {
                 Elements cols = row.select("td");
                 if (cols.size() < 7) continue;
 
-                String timeStr = cols.get(0).text().trim();
-                String operatorRaw = cols.get(1).text().trim();
+                String departureTimeStr = cols.get(0).text().trim();
+                String companyAndDuration = cols.get(1).text().trim();
                 String busType = cols.get(2).text().trim();
+                String priceStr = cols.get(3).text().replace(",", "").replace("원", "").trim();
 
-                if (timeStr.isEmpty() || operatorRaw.isEmpty()) continue;
+                String busCompany = companyAndDuration.split("\\d", 2)[0].replace("\u00A0", "").trim();
+                String duration = companyAndDuration.substring(busCompany.length()).replace("소요 예상", "").trim();
 
-                LocalTime localTime = LocalTime.parse(timeStr, TIME_FORMATTER);
-                LocalDateTime departureDateTime = date.atTime(localTime);
+                LocalDateTime departureDateTime = LocalDateTime.parse(
+                        date + "T" + departureTimeStr,
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm")
+                );
 
-                String busCompany = operatorRaw.replaceAll("(\\d+:\\d+).*", "").trim();
-                String duration = operatorRaw.replaceAll(".*?(\\d+:\\d+).*", "$1");
+                Integer price = Integer.parseInt(priceStr);
 
-                list.add(OperationInfo.builder()
+                result.add(OperationInfo.builder()
                         .departureDateTime(departureDateTime)
                         .busCompany(busCompany)
-                        .duration(duration)
                         .busType(busType)
+                        .duration(duration)
+                        .price(price)
                         .build());
             }
 
-            return list;
+            return result;
         } catch (Exception e) {
-            log.error("❌ 운행정보 수집 실패: {}", e.getMessage(), e);
-            return Collections.emptyList();
+            log.error("❌ 운행정보 가져오기 실패: {} -> {}, {}", target.getDepartureId(), target.getArrivalId(), date, e);
+            return List.of();
         }
     }
 
@@ -143,20 +147,24 @@ public class OperationSyncScheduler {
     private static class OperationInfo {
         private LocalDateTime departureDateTime;
         private String busCompany;
-        private String duration;
         private String busType;
+        private String duration;
+        private Integer price;
 
         public Operation toEntity(Route route) {
-            return Operation.create(departureDateTime, busCompany, duration, busType, route);
+            return Operation.create(departureDateTime, busCompany, busType, duration, price, route);
         }
     }
 
     @Getter
-    @AllArgsConstructor
-    private static class RoutePair {
-        private String departureId;
-        private String arrivalId;
-        private String departureName;
-        private String arrivalName;
+    @Builder
+    private static class RouteTarget {
+        private final String departureId;
+        private final String arrivalId;
+
+        public RouteTarget(String departureId, String arrivalId) {
+            this.departureId = departureId;
+            this.arrivalId = arrivalId;
+        }
     }
 }
