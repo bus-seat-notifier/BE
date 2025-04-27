@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -16,18 +17,25 @@ import lombok.*;
 public class Terminal extends BaseTimeEntity {
 
     @Id
+    @Column(name = "id", nullable = false)
     private String id;
+
+    @Column(name = "name", nullable = false)
 
     private String name;
 
-    @Column(name = "area_cd")
+    @Column(name = "area_cd", nullable = false)
     private String areaCode;
 
-    public static Terminal create(String id, String name, String areaCode) {
+    @Column(name = "departure_yn", nullable = false)
+    private String departureYn;
+
+    public static Terminal create(String id, String name, String areaCode, String departureYn) {
         return Terminal.builder()
                 .id(id)
                 .name(name)
                 .areaCode(areaCode)
+                .departureYn(departureYn)
                 .build();
     }
 }

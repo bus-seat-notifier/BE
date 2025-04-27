@@ -24,14 +24,14 @@ public class TerminalHelper {
     }
 
 
-    public Terminal getOrCreateTerminal(String id, String name, String areaCode) {
+    public Terminal getOrCreateTerminal(String id, String name, String areaCode, String departureYn) {
         return terminalRepository.findById(id).orElseGet(() -> {
-            Terminal terminal = Terminal.create(id, name, areaCode);
+            Terminal terminal = Terminal.create(id, name, areaCode, departureYn);
             return terminalRepository.save(terminal);
         });
     }
 
     public List<Terminal> getAllDepartureTerminals() {
-        return terminalRepository.findAll();
+        return terminalRepository.findAllByDepartureYn("Y");
     }
 }

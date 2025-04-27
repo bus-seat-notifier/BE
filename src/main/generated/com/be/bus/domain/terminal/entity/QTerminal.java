@@ -32,6 +32,8 @@ public class QTerminal extends EntityPathBase<Terminal> {
     //inherited
     public final StringPath deleteYn = _super.deleteYn;
 
+    public final StringPath departureYn = createString("departureYn");
+
     public final StringPath id = createString("id");
 
     public final StringPath name = createString("name");
