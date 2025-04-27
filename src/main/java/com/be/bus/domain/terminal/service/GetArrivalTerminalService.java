@@ -3,8 +3,6 @@ package com.be.bus.domain.terminal.service;
 import com.be.bus.domain.route.entity.Route;
 import com.be.bus.domain.route.helper.RouteHelper;
 import com.be.bus.domain.terminal.dto.res.ArrivalTerminalResDto;
-import com.be.bus.domain.terminal.dto.res.DepartureTerminalResDto;
-import com.be.bus.domain.terminal.dto.res.TerminalDto;
 import com.be.bus.domain.terminal.entity.Terminal;
 import com.be.bus.domain.terminal.helper.TerminalHelper;
 import lombok.RequiredArgsConstructor;

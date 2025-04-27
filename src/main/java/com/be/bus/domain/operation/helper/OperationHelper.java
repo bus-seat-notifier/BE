@@ -6,7 +6,9 @@ import com.be.bus.domain.route.entity.Route;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -22,4 +24,9 @@ public class OperationHelper {
         return operationRepository.existsByRouteAndDepartureDateTime(route, departureDateTime);
     }
 
+    public List<Operation> findMonthlyByRoute(Route route) {
+        LocalDateTime now = LocalDate.now().atStartOfDay();
+        LocalDateTime dest = LocalDate.now().plusMonths(1).atTime(23, 59, 59);
+        return operationRepository.findByRouteAndDepartureDateTimeBetween(route, now, dest);
+    }
 }

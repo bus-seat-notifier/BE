@@ -20,7 +20,6 @@ public class TerminalController {
     private final GetDepartureTerminalService getDepartureTerminalService;
     private final GetArrivalTerminalService getArrivalTerminalService;
 
-
     @Operation(summary = "출발 터미널 조회", description = "출발 가능한 터미널 목록을 조회합니다.")
     @GetMapping("/departure")
     ResponseEntity<SuccessResponse<?>> getDepartureTerminal() {
