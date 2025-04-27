@@ -8,6 +8,7 @@ import com.be.bus.global.error.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -33,5 +34,9 @@ public class RouteHelper {
     public boolean isTerminalNameChanged(Route route, String depName, String arrName) {
         return !(route.getDepartureTerminal().getName().equals(depName) &&
                 route.getArrivalTerminal().getName().equals(arrName));
+    }
+
+    public List<Route> getRoutesByDepartureTerminal(Terminal departureTerminal){
+        return  routeRepository.findByDepartureTerminal(departureTerminal);
     }
 }
