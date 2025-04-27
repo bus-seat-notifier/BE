@@ -42,15 +42,21 @@
 //        int modified = 0;
 //        int total = 0;
 //
-//        List<TerminalDto> departures = fetchTerminals("01", null);
-//        for (TerminalDto dep : departures) {
-//            List<TerminalDto> arrivals = fetchTerminals("02", dep.trml_Cd());
+//        List<TerminalInfo> departures = fetchTerminals("01", null);
+//        for (TerminalInfo dep : departures) {
+//            // ✨ 출발 터미널은 여기서 1번만 생성
+//            Terminal departureTerminal = terminalHelper.getOrCreateTerminal(dep.trml_Cd(), dep.trml_Nm(), dep.cty_Bus_Area_Cd(), "Y");
+//        }
 //
-//            for (TerminalDto arr : arrivals) {
+//        for (TerminalInfo dep : departures) {
+//
+//            Terminal departureTerminal = terminalHelper.getOrCreateTerminal(dep.trml_Cd(), dep.trml_Nm(), dep.cty_Bus_Area_Cd(), "Y");
+//
+//            List<TerminalInfo> arrivals = fetchTerminals("02", dep.trml_Cd());
+//            for (TerminalInfo arr : arrivals) {
 //                total++;
 //
-//                Terminal departureTerminal = terminalHelper.getOrCreateTerminal(dep.trml_Cd(), dep.trml_Nm(), dep.cty_Bus_Area_Cd());
-//                Terminal arrivalTerminal = terminalHelper.getOrCreateTerminal(arr.trml_Cd(), arr.trml_Nm(), arr.cty_Bus_Area_Cd());
+//                Terminal arrivalTerminal = terminalHelper.getOrCreateTerminal(arr.trml_Cd(), arr.trml_Nm(), arr.cty_Bus_Area_Cd(),"N");
 //
 //                Optional<Route> optionalRoute = routeHelper.findOptionalByDepartureAndArrival(departureTerminal, arrivalTerminal);
 //
@@ -62,7 +68,6 @@
 //                    modified++;
 //                }
 //
-//                // ✅ 1000건마다 로그 출력
 //                if (total % 1000 == 0) {
 //                    log.info("📦 처리 중.. 현재까지 {}건 처리됨 (➕ 추가: {}, 🔄 변경: {})", total, added, modified);
 //                }
@@ -73,7 +78,8 @@
 //    }
 //
 //
-//    private List<TerminalDto> fetchTerminals(String rtnGbn, String preTrmlCd) {
+//
+//    private List<TerminalInfo> fetchTerminals(String rtnGbn, String preTrmlCd) {
 //        MultiValueMap<String, String> payload = new LinkedMultiValueMap<>();
 //        payload.add("cty_Bus_Area_Cd", "");
 //        payload.add("trml_Nm", "");
@@ -90,5 +96,5 @@
 //    }
 //
 //    @JsonIgnoreProperties(ignoreUnknown = true)
-//    private record TerminalDto(String trml_Cd, String trml_Nm, String cty_Bus_Area_Cd) {}
+//    private record TerminalInfo(String trml_Cd, String trml_Nm, String cty_Bus_Area_Cd) {}
 //}
