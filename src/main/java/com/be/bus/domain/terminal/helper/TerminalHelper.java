@@ -10,6 +10,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class TerminalHelper {
@@ -27,5 +29,9 @@ public class TerminalHelper {
             Terminal terminal = Terminal.create(id, name, areaCode);
             return terminalRepository.save(terminal);
         });
+    }
+
+    public List<Terminal> getAllDepartureTerminals() {
+        return terminalRepository.findAll();
     }
 }
