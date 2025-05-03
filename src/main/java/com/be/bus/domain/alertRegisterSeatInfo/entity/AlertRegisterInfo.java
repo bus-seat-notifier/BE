@@ -1,5 +1,6 @@
 package com.be.bus.domain.alertRegisterSeatInfo.entity;
 
+import com.be.bus.domain.alertRegisterInfo.enums.SeatAlertType;
 import com.be.bus.domain.operation.entity.Operation;
 import com.be.bus.domain.user.entity.User;
 import com.be.bus.global.entity.BaseTimeEntity;
@@ -31,13 +32,18 @@ public class AlertRegisterInfo extends BaseTimeEntity {
     @Column(name = "last_alert_dtm")
     private LocalDateTime lastAlertDtm;
 
+    @Column(name = "seat_alert_type", nullable = false)
+    @Enumerated(EnumType.STRING) // 문자열로 저장 (ex: "WINDOW")
+    private SeatAlertType seatAlertType;
 
 
-    public static AlertRegisterInfo create(User user, Operation operation, LocalDateTime lastAlertDtm) {
+    public static AlertRegisterInfo create(User user, Operation operation, SeatAlertType seatAlertType, LocalDateTime lastAlertDtm) {
         return AlertRegisterInfo.builder()
                 .user(user)
                 .operation(operation)
+                .seatAlertType(seatAlertType)
                 .lastAlertDtm(lastAlertDtm)
                 .build();
     }
+
 }

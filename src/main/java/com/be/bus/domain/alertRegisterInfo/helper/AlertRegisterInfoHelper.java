@@ -1,6 +1,7 @@
 package com.be.bus.domain.alertRegisterInfo.helper;
 
 import com.be.bus.domain.alertRegisterInfo.dto.req.SaveAlertRegisterInfoReqDto;
+import com.be.bus.domain.alertRegisterInfo.enums.SeatAlertType;
 import com.be.bus.domain.alertRegisterInfo.repository.AlertRegisterInfoRepository;
 import com.be.bus.domain.alertRegisterSeatInfo.entity.AlertRegisterInfo;
 import com.be.bus.domain.operation.entity.Operation;
@@ -14,8 +15,9 @@ public class AlertRegisterInfoHelper {
     private final AlertRegisterInfoRepository alertRegisterInfoRepository;
 
     public void save(User user, Operation operation) {
+        // TODO : SeatAlertType을 변경할 수 있게 하기
         alertRegisterInfoRepository.save(
-                AlertRegisterInfo.create(user, operation, null)
+                AlertRegisterInfo.create(user, operation, SeatAlertType.ALL, null)
         );
 
     }

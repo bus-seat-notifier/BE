@@ -39,6 +39,8 @@ public class QAlertRegisterInfo extends EntityPathBase<AlertRegisterInfo> {
 
     public final com.be.bus.domain.operation.entity.QOperation operation;
 
+    public final EnumPath<com.be.bus.domain.alertRegisterInfo.enums.SeatAlertType> seatAlertType = createEnum("seatAlertType", com.be.bus.domain.alertRegisterInfo.enums.SeatAlertType.class);
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
