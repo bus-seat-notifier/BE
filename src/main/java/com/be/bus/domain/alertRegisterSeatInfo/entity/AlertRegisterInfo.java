@@ -1,9 +1,12 @@
-package com.be.bus.domain.alert.entity;
+package com.be.bus.domain.alertRegisterSeatInfo.entity;
 
+import com.be.bus.domain.operation.entity.Operation;
 import com.be.bus.domain.user.entity.User;
 import com.be.bus.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -21,17 +24,20 @@ public class AlertRegisterInfo extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "route_id", nullable = false)
-    private Long routeId;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "operation_id")
+    private Operation operation;
 
-    @Column(name = "departure_dtm", nullable = false)
-    private String departureDateTime;
+    @Column(name = "last_alert_dtm")
+    private LocalDateTime lastAlertDtm;
 
-    public static AlertRegisterInfo create(User user, Long routeId, String departureDateTime) {
+
+
+    public static AlertRegisterInfo create(User user, Operation operation, LocalDateTime lastAlertDtm) {
         return AlertRegisterInfo.builder()
                 .user(user)
-                .routeId(routeId)
-                .departureDateTime(departureDateTime)
+                .operation(operation)
+                .lastAlertDtm(lastAlertDtm)
                 .build();
     }
 }
