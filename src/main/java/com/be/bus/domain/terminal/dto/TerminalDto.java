@@ -1,4 +1,4 @@
-package com.be.bus.domain.terminal.dto.res;
+package com.be.bus.domain.terminal.dto;
 
 import com.be.bus.domain.terminal.entity.Terminal;
 import lombok.AccessLevel;

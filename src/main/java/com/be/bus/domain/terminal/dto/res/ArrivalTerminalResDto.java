@@ -8,15 +8,15 @@ import lombok.Builder;
 import java.util.List;
 
 @Builder(access = AccessLevel.PRIVATE)
-public record DepartureTerminalResDto(
+public record ArrivalTerminalResDto(
         List<TerminalDto> terminalList
 ) {
-    public static DepartureTerminalResDto of(List<Terminal> allDepartureTerminals) {
-        List<TerminalDto> terminalDtos = allDepartureTerminals.stream()
+    public static ArrivalTerminalResDto of(List<Terminal> allArrivalTerminals) {
+        List<TerminalDto> terminalDtos = allArrivalTerminals.stream()
                 .map(TerminalDto::of)
                 .toList();
 
-        return DepartureTerminalResDto.builder()
+        return ArrivalTerminalResDto.builder()
                 .terminalList(terminalDtos)
                 .build();
     }
