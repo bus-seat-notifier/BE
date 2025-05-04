@@ -1,4 +1,4 @@
-package com.be.bus.domain.alert.entity;
+package com.be.bus.domain.alertRegisterSeatInfo.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -16,7 +16,7 @@ import com.querydsl.core.types.dsl.PathInits;
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QAlertRegisterInfo extends EntityPathBase<AlertRegisterInfo> {
 
-    private static final long serialVersionUID = -406387406L;
+    private static final long serialVersionUID = -1228363332L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
@@ -33,11 +33,13 @@ public class QAlertRegisterInfo extends EntityPathBase<AlertRegisterInfo> {
     //inherited
     public final StringPath deleteYn = _super.deleteYn;
 
-    public final StringPath departureDateTime = createString("departureDateTime");
-
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final NumberPath<Long> routeId = createNumber("routeId", Long.class);
+    public final DateTimePath<java.time.LocalDateTime> lastAlertDtm = createDateTime("lastAlertDtm", java.time.LocalDateTime.class);
+
+    public final com.be.bus.domain.operation.entity.QOperation operation;
+
+    public final EnumPath<com.be.bus.domain.alertRegisterInfo.enums.SeatAlertType> seatAlertType = createEnum("seatAlertType", com.be.bus.domain.alertRegisterInfo.enums.SeatAlertType.class);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
@@ -62,6 +64,7 @@ public class QAlertRegisterInfo extends EntityPathBase<AlertRegisterInfo> {
 
     public QAlertRegisterInfo(Class<? extends AlertRegisterInfo> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.operation = inits.isInitialized("operation") ? new com.be.bus.domain.operation.entity.QOperation(forProperty("operation"), inits.get("operation")) : null;
         this.user = inits.isInitialized("user") ? new com.be.bus.domain.user.entity.QUser(forProperty("user")) : null;
     }
 

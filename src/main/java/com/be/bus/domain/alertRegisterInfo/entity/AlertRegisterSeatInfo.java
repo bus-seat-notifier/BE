@@ -1,6 +1,6 @@
-package com.be.bus.domain.alert.entity;
+package com.be.bus.domain.alertRegisterInfo.entity;
 
-import com.be.bus.domain.alert.entity.AlertRegisterInfo;
+import com.be.bus.domain.alertRegisterSeatInfo.entity.AlertRegisterInfo;
 import com.be.bus.global.entity.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,13 +21,13 @@ public class AlertRegisterSeatInfo extends BaseTimeEntity {
     @JoinColumn(name = "alert_register_info_id")
     private AlertRegisterInfo alertRegisterInfo;
 
-    @Column(name = "seat_type", nullable = false)
-    private String seatType;
+    @Column(name = "seat_number", nullable = false)
+    private Long seatNumber;
 
-    public static AlertRegisterSeatInfo create(AlertRegisterInfo alertRegisterInfo, String seatType) {
+    public static AlertRegisterSeatInfo create(AlertRegisterInfo alertRegisterInfo, Long seatNumber) {
         return AlertRegisterSeatInfo.builder()
                 .alertRegisterInfo(alertRegisterInfo)
-                .seatType(seatType)
+                .seatNumber(seatNumber)
                 .build();
     }
 }

@@ -1,4 +1,4 @@
-package com.be.bus.application.operation;
+package com.be.bus.application.operation.controller;
 
 import com.be.bus.domain.operation.dto.res.MonthlyOperationResDto;
 import com.be.bus.domain.operation.service.GetMonthlyOperationByRouteService;
