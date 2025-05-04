@@ -4,6 +4,7 @@ import com.be.bus.domain.alertRegisterInfo.enums.SeatAlertType;
 import com.be.bus.domain.operation.entity.Operation;
 import com.be.bus.domain.user.entity.User;
 import com.be.bus.global.entity.BaseTimeEntity;
+import com.be.bus.global.utils.UpdateValueUtils;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -46,4 +47,7 @@ public class AlertRegisterInfo extends BaseTimeEntity {
                 .build();
     }
 
+    public void updateLastAlertDtm(LocalDateTime lastAlertDtm) {
+        this.lastAlertDtm = UpdateValueUtils.updateValue(this.lastAlertDtm, lastAlertDtm);
+    }
 }
