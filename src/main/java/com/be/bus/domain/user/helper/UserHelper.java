@@ -1,6 +1,7 @@
 package com.be.bus.domain.user.helper;
 
 import com.be.bus.domain.user.entity.User;
+import com.be.bus.domain.user.error.UserErrorCode;
 import com.be.bus.domain.user.repository.UserRepository;
 import com.be.bus.global.enums.GlobalErrorCode;
 import com.be.bus.global.error.exception.EntityNotFoundException;
@@ -14,6 +15,6 @@ public class UserHelper {
 
     public User findByIdOrElseThrow(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException(GlobalErrorCode.ENTITY_NOT_FOUND));
+                .orElseThrow(() -> new EntityNotFoundException(UserErrorCode.USER_ENTITY_NOT_FOUND));
     }
 }

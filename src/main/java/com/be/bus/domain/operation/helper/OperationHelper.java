@@ -1,10 +1,9 @@
 package com.be.bus.domain.operation.helper;
 
 import com.be.bus.domain.operation.entity.Operation;
+import com.be.bus.domain.operation.error.OperationErrorCode;
 import com.be.bus.domain.operation.repository.OperationRepository;
 import com.be.bus.domain.route.entity.Route;
-import com.be.bus.global.enums.ErrorCode;
-import com.be.bus.global.enums.GlobalErrorCode;
 import com.be.bus.global.error.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -21,7 +20,7 @@ public class OperationHelper {
 
     public Operation findByIdOrElseThrow(Long OperationId) {
         return operationRepository.findById(OperationId)
-                .orElseThrow(() -> new EntityNotFoundException(GlobalErrorCode.ENTITY_NOT_FOUND));
+                .orElseThrow(() -> new EntityNotFoundException(OperationErrorCode.OPERATION_ENTITY_NOT_FOUND));
     }
     public Operation saveOperation(Operation operation) {
         return operationRepository.save(operation);

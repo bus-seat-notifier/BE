@@ -3,8 +3,8 @@ package com.be.bus.domain.terminal.helper;
 import com.be.bus.domain.route.entity.Route;
 import com.be.bus.domain.route.repository.RouteRepository;
 import com.be.bus.domain.terminal.entity.Terminal;
+import com.be.bus.domain.terminal.error.TerminalErrorCode;
 import com.be.bus.domain.terminal.repository.TerminalRepository;
-import com.be.bus.global.enums.GlobalErrorCode;
 import com.be.bus.global.error.exception.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class TerminalHelper {
 
     public Terminal findByIdOrElseThrow(String id) {
         return terminalRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(GlobalErrorCode.ENTITY_NOT_FOUND));
+                .orElseThrow(() -> new EntityNotFoundException(TerminalErrorCode.TERMINAL_ENTITY_NOT_FOUND));
     }
 
 
