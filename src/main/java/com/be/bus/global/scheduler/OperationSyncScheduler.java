@@ -41,10 +41,7 @@ public class OperationSyncScheduler {
     private static final String URL = "https://txbus.t-money.co.kr/otck/readAlcnList.do";
 
     // 테스트용
-//    @Scheduled(cron = "0 5 0 * * *") // 매일 00시05분
-
-
-    @Scheduled(fixedRate = 1000 * 60 * 60) // 매일 00시05분
+    @Scheduled(cron = "0 5 0 * * *") // 매일 00시05분
     @Transactional
     public void syncOperations() {
         log.info("\uD83D\uDE8C 운행정보 동기화 시작!");
