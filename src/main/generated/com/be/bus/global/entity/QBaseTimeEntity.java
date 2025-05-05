@@ -19,13 +19,13 @@ public class QBaseTimeEntity extends EntityPathBase<BaseTimeEntity> {
 
     public static final QBaseTimeEntity baseTimeEntity = new QBaseTimeEntity("baseTimeEntity");
 
-    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
+    public final DateTimePath<java.time.LocalDateTime> createDtm = createDateTime("createDtm", java.time.LocalDateTime.class);
 
-    public final DateTimePath<java.time.LocalDateTime> deletedAt = createDateTime("deletedAt", java.time.LocalDateTime.class);
+    public final DateTimePath<java.time.LocalDateTime> deleteDtm = createDateTime("deleteDtm", java.time.LocalDateTime.class);
 
     public final StringPath deleteYn = createString("deleteYn");
 
-    public final DateTimePath<java.time.LocalDateTime> updatedAt = createDateTime("updatedAt", java.time.LocalDateTime.class);
+    public final DateTimePath<java.time.LocalDateTime> updateDtm = createDateTime("updateDtm", java.time.LocalDateTime.class);
 
     public QBaseTimeEntity(String variable) {
         super(BaseTimeEntity.class, forVariable(variable));

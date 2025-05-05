@@ -49,14 +49,14 @@ public class SeatCheckSchedulerService {
         for (AlertRegisterInfo alert : alertList) {
             Operation operation = alert.getOperation();
             SeatAlertType alertType = alert.getSeatAlertType();
-            LocalTime targetTime = operation.getDepartureDateTime().toLocalTime();
+            LocalTime targetTime = operation.getDepartureDtm().toLocalTime();
 
             MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
             params.add("depr_Trml_Cd", operation.getRoute().getDepartureTerminal().getId().toString());
             params.add("arvl_Trml_Cd", operation.getRoute().getArrivalTerminal().getId().toString());
             params.add("depr_Trml_Nm", operation.getRoute().getDepartureTerminal().getName());
             params.add("arvl_Trml_Nm", operation.getRoute().getArrivalTerminal().getName());
-            params.add("depr_Dt", operation.getDepartureDateTime().toLocalDate().toString());
+            params.add("depr_Dt", operation.getDepartureDtm().toLocalDate().toString());
             params.add("depr_Time", "00:00");
             params.add("req_Rec_Num", "100");
             params.add("bef_Aft_Dvs", "D");
@@ -105,13 +105,13 @@ public class SeatCheckSchedulerService {
                     if (available > 0) {
                         log.info("✅ [OperationID: {} | AlertID: {}] {} 출발 → 좌석 {} / {} 있음",
                                 operation.getId(), alert.getId(),
-                                operation.getDepartureDateTime(), available, total);
+                                operation.getDepartureDtm(), available, total);
 
                         LocalDateTime now = LocalDateTime.now();
                         if (alert.getLastAlertDtm() == null || alert.getLastAlertDtm().isBefore(now.minusMinutes(10))) {
                             sendMailService.execute(
                                     EmptySeatSendMailReqDto.of(alert.getUser().getEmail(),
-                                            operation.getDepartureDateTime(),
+                                            operation.getDepartureDtm(),
                                             operation.getRoute().getDepartureTerminal().getName() + " → " +
                                                     operation.getRoute().getArrivalTerminal().getName(),
                                             available)

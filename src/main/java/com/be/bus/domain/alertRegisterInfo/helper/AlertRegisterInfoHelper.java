@@ -7,6 +7,8 @@ import com.be.bus.domain.alertRegisterInfo.repository.AlertRegisterInfoRepositor
 import com.be.bus.domain.alertRegisterSeatInfo.entity.AlertRegisterInfo;
 import com.be.bus.domain.operation.entity.Operation;
 import com.be.bus.domain.user.entity.User;
+import com.be.bus.global.enums.GlobalErrorCode;
+import com.be.bus.global.error.exception.ConflictException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +20,11 @@ public class AlertRegisterInfoHelper {
     private final AlertRegisterInfoRepository alertRegisterInfoRepository;
 
     public void save(User user, Operation operation) {
+        boolean isExist = alertRegisterInfoRepository.existsByUserAndOperation(user, operation);
+        if (isExist) {
+            throw new ConflictException(GlobalErrorCode.CONFLICT);
+        }
+
         // TODO : SeatAlertType을 변경할 수 있게 하기
         alertRegisterInfoRepository.save(
                 AlertRegisterInfo.create(user, operation, SeatAlertType.ALL_SEAT, null)

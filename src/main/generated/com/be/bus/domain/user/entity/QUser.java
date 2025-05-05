@@ -22,10 +22,10 @@ public class QUser extends EntityPathBase<User> {
     public final com.be.bus.global.entity.QBaseTimeEntity _super = new com.be.bus.global.entity.QBaseTimeEntity(this);
 
     //inherited
-    public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
+    public final DateTimePath<java.time.LocalDateTime> createDtm = _super.createDtm;
 
     //inherited
-    public final DateTimePath<java.time.LocalDateTime> deletedAt = _super.deletedAt;
+    public final DateTimePath<java.time.LocalDateTime> deleteDtm = _super.deleteDtm;
 
     //inherited
     public final StringPath deleteYn = _super.deleteYn;
@@ -35,7 +35,7 @@ public class QUser extends EntityPathBase<User> {
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     //inherited
-    public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
+    public final DateTimePath<java.time.LocalDateTime> updateDtm = _super.updateDtm;
 
     public QUser(String variable) {
         super(User.class, forVariable(variable));
