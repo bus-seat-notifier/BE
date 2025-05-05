@@ -20,16 +20,16 @@ public abstract class BaseTimeEntity {
     // 생성일시
     @CreatedDate
     @Column(name = "create_dtm", updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createDtm;
 
     // 수정일시
     @LastModifiedDate
     @Column(name = "update_dtm")
-    private LocalDateTime updatedAt;
+    private LocalDateTime updateDtm;
 
     // 삭제일시 (Soft delete용)
     @Column(name = "delete_dtm")
-    private LocalDateTime deletedAt;
+    private LocalDateTime deleteDtm;
 
     // 삭제 여부 (Y/N)
     @Column(name = "delete_yn", length = 1, nullable = false)

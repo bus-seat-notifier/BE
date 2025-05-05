@@ -18,9 +18,9 @@ public record MonthlyOperationResDto(
         Map<LocalDate, List<OperationDto>> operationMap = new HashMap<>();
 
         operationList.forEach(operation -> {
-            LocalDate key = operation.getDepartureDateTime().toLocalDate();
+            LocalDate key = operation.getDepartureDtm().toLocalDate();
             OperationDto item = OperationDto.of(
-                    operation.getDepartureDateTime().toLocalTime(),
+                    operation.getDepartureDtm().toLocalTime(),
                     operation.getBusCompany(),
                     operation.getBusType(),
                     operation.getDuration(),

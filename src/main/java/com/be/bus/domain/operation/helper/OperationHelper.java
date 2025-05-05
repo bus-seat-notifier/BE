@@ -27,13 +27,13 @@ public class OperationHelper {
         return operationRepository.save(operation);
     }
 
-    public boolean existsByRouteAndDepartureDateTime(Route route, LocalDateTime departureDateTime) {
-        return operationRepository.existsByRouteAndDepartureDateTime(route, departureDateTime);
+    public boolean existsByRouteAndDepartureDateTime(Route route, LocalDateTime departureDtm) {
+        return operationRepository.existsByRouteAndDepartureDtm(route, departureDtm);
     }
 
     public List<Operation> findMonthlyByRoute(Route route) {
         LocalDateTime now = LocalDate.now().atStartOfDay();
         LocalDateTime dest = LocalDate.now().plusMonths(1).atTime(23, 59, 59);
-        return operationRepository.findByRouteAndDepartureDateTimeBetween(route, now, dest);
+        return operationRepository.findByRouteAndDepartureDtmBetween(route, now, dest);
     }
 }

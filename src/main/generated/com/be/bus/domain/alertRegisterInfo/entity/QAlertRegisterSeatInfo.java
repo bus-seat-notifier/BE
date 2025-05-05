@@ -27,10 +27,10 @@ public class QAlertRegisterSeatInfo extends EntityPathBase<AlertRegisterSeatInfo
     public final com.be.bus.domain.alertRegisterSeatInfo.entity.QAlertRegisterInfo alertRegisterInfo;
 
     //inherited
-    public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
+    public final DateTimePath<java.time.LocalDateTime> createDtm = _super.createDtm;
 
     //inherited
-    public final DateTimePath<java.time.LocalDateTime> deletedAt = _super.deletedAt;
+    public final DateTimePath<java.time.LocalDateTime> deleteDtm = _super.deleteDtm;
 
     //inherited
     public final StringPath deleteYn = _super.deleteYn;
@@ -40,7 +40,7 @@ public class QAlertRegisterSeatInfo extends EntityPathBase<AlertRegisterSeatInfo
     public final NumberPath<Long> seatNumber = createNumber("seatNumber", Long.class);
 
     //inherited
-    public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
+    public final DateTimePath<java.time.LocalDateTime> updateDtm = _super.updateDtm;
 
     public QAlertRegisterSeatInfo(String variable) {
         this(AlertRegisterSeatInfo.class, forVariable(variable), INITS);

@@ -45,6 +45,12 @@ dependencies {
 
 	// Swagger(OpenAPI 3.0)1
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6'
+
+	//google smtp
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	//동적 email html생성을 위한 타임리프
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 }
 
 // Querydsl 설정부

@@ -24,10 +24,10 @@ public class QTerminal extends EntityPathBase<Terminal> {
     public final StringPath areaCode = createString("areaCode");
 
     //inherited
-    public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
+    public final DateTimePath<java.time.LocalDateTime> createDtm = _super.createDtm;
 
     //inherited
-    public final DateTimePath<java.time.LocalDateTime> deletedAt = _super.deletedAt;
+    public final DateTimePath<java.time.LocalDateTime> deleteDtm = _super.deleteDtm;
 
     //inherited
     public final StringPath deleteYn = _super.deleteYn;
@@ -39,7 +39,7 @@ public class QTerminal extends EntityPathBase<Terminal> {
     public final StringPath name = createString("name");
 
     //inherited
-    public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
+    public final DateTimePath<java.time.LocalDateTime> updateDtm = _super.updateDtm;
 
     public QTerminal(String variable) {
         super(Terminal.class, forVariable(variable));

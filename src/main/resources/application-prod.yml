@@ -12,7 +12,7 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        show_sql: true
+        show_sql: false
   cloud:
     aws:
       s3:
@@ -36,7 +36,7 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: team.dododok@gmail.com
+    username: wlsdndml213@gmail.com
     password: ${prod.mail.password}
     properties:
       mail:

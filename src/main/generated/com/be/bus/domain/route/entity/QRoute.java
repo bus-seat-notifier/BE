@@ -27,10 +27,10 @@ public class QRoute extends EntityPathBase<Route> {
     public final com.be.bus.domain.terminal.entity.QTerminal arrivalTerminal;
 
     //inherited
-    public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
+    public final DateTimePath<java.time.LocalDateTime> createDtm = _super.createDtm;
 
     //inherited
-    public final DateTimePath<java.time.LocalDateTime> deletedAt = _super.deletedAt;
+    public final DateTimePath<java.time.LocalDateTime> deleteDtm = _super.deleteDtm;
 
     //inherited
     public final StringPath deleteYn = _super.deleteYn;
@@ -42,7 +42,7 @@ public class QRoute extends EntityPathBase<Route> {
     public final StringPath name = createString("name");
 
     //inherited
-    public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
+    public final DateTimePath<java.time.LocalDateTime> updateDtm = _super.updateDtm;
 
     public QRoute(String variable) {
         this(Route.class, forVariable(variable), INITS);

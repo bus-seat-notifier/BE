@@ -15,7 +15,6 @@ import org.hibernate.annotations.ColumnDefault;
 @Entity
 @Table(name = "terminal")
 public class Terminal extends BaseTimeEntity {
-
     @Id
     @Column(name = "id", nullable = false)
     private String id;
@@ -24,7 +23,7 @@ public class Terminal extends BaseTimeEntity {
 
     private String name;
 
-    @Column(name = "area_cd", nullable = false)
+    @Column(name = "area_code", nullable = false)
     private String areaCode;
 
     @Column(name = "departure_yn", nullable = false)
