@@ -1,14 +1,11 @@
 package com.be.bus.domain.alertRegisterInfo.helper;
 
-import com.be.bus.domain.alertRegisterInfo.dto.AlertRegisterInfoDto;
-import com.be.bus.domain.alertRegisterInfo.dto.req.SaveAlertRegisterInfoReqDto;
 import com.be.bus.domain.alertRegisterInfo.enums.SeatAlertType;
 import com.be.bus.domain.alertRegisterInfo.error.AlertRegisterInfoErrorCode;
 import com.be.bus.domain.alertRegisterInfo.repository.AlertRegisterInfoRepository;
 import com.be.bus.domain.alertRegisterSeatInfo.entity.AlertRegisterInfo;
 import com.be.bus.domain.operation.entity.Operation;
 import com.be.bus.domain.user.entity.User;
-import com.be.bus.global.enums.GlobalErrorCode;
 import com.be.bus.global.error.exception.ConflictException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

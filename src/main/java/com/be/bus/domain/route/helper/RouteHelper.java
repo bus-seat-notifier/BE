@@ -1,10 +1,9 @@
 package com.be.bus.domain.route.helper;
 
 import com.be.bus.domain.route.entity.Route;
+import com.be.bus.domain.route.error.RouteErrorCode;
 import com.be.bus.domain.route.repository.RouteRepository;
 import com.be.bus.domain.terminal.entity.Terminal;
-import com.be.bus.global.enums.ErrorCode;
-import com.be.bus.global.enums.GlobalErrorCode;
 import com.be.bus.global.error.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -20,7 +19,7 @@ public class RouteHelper {
 
     public Route findByIdOrElseThrow(Long routeId) {
         return routeRepository.findById(routeId)
-                .orElseThrow(() -> new EntityNotFoundException(GlobalErrorCode.ENTITY_NOT_FOUND));
+                .orElseThrow(() -> new EntityNotFoundException(RouteErrorCode.ROUTE_ENTITY_NOT_FOUND));
     }
 
     public Optional<Route> findOptionalByDepartureAndArrival(Terminal departure, Terminal arrival) {
@@ -29,7 +28,7 @@ public class RouteHelper {
 
     public Route findByDepartureAndArrival(Terminal departure, Terminal arrival) {
         return findOptionalByDepartureAndArrival(departure, arrival)
-                .orElseThrow(() -> new EntityNotFoundException());
+                .orElseThrow(() -> new EntityNotFoundException(RouteErrorCode.ROUTE_ENTITY_NOT_FOUND));
     }
 
     public Route createRoute(Terminal departure, Terminal arrival) {
