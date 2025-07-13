@@ -1,4 +1,4 @@
-package com.be.bus.global.scheduler;
+package com.be.bus.batchserver.scheduler;
 
 import com.be.bus.domain.operation.entity.Operation;
 import com.be.bus.domain.operation.helper.OperationHelper;
