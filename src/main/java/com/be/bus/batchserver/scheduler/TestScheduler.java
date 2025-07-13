@@ -33,7 +33,7 @@ import java.util.List;
 public class TestScheduler {
 
     // 테스트용
-    @Scheduled(cron = "*/10 * * * * *") // 매일 00시05분
+    @Scheduled(cron = "0 * * * * *") // 매일 00시05분
     @Transactional
     public void test() {
         log.info("배치 잘 도니?");
