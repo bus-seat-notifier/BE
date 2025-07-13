@@ -33,8 +33,8 @@ public class RouteSyncScheduler {
     private static final String URL = "https://txbus.t-money.co.kr/otck/readTrmlList.do";
 
     // 노선 동기화 스케줄러
-    //@Scheduled(cron = "0 0 0 1 * *") // 매월 1일 실행
-    @Scheduled(fixedDelay = 1000*60*60) // 1시간짜리 즉시실행
+    @Scheduled(cron = "0 0 3 * * *") // 매일 03시 0분 0초 
+    //@Scheduled(fixedDelay = 1000*60*60) // 1시간짜리 즉시실행
 
     @Transactional
     public void syncRoutes() {

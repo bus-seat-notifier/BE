@@ -25,8 +25,8 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -40,11 +40,12 @@ public class OperationSyncScheduler {
 
     private static final String URL = "https://txbus.t-money.co.kr/otck/readAlcnList.do";
 
-    // 테스트용
-    @Scheduled(cron = "0 5 0 * * *") // 매일 00시05분
+    @Scheduled(cron = "0 0 0 * * *") // 매일 0시0분0초
+    //@Scheduled(fixedDelay = 1000*60*60) // 1시간짜리 즉시실행
+
     @Transactional
     public void syncOperations() {
-        log.info("\uD83D\uDE8C 운행정보 동기화 시작!");
+        log.info("\\uD83D\\uDE8C 운행정보 동기화 시작!");
 
         List<RouteTarget> targets = List.of(
                 new RouteTarget("5325101", "0671801"),
@@ -63,25 +64,56 @@ public class OperationSyncScheduler {
                 LocalDate targetDate = today.plusDays(i);
                 List<OperationInfo> operationInfos = fetchOperations(target, targetDate);
 
+                // 해당 날짜에 존재하는 운행정보를 가져와 map으로 변경
+                List<Operation> existingOps = operationHelper.findByRouteAndDate(route, targetDate);
+                Map<LocalDateTime, Operation> existingOpMap = existingOps.stream()
+                        .collect(Collectors.toMap(Operation::getDepartureDtm, op -> op));
+                Set<LocalDateTime> fetchedTimes = new HashSet<>();
+
                 int inserted = 0;
 
                 for (OperationInfo info : operationInfos) {
-                    boolean exists = operationHelper.existsByRouteAndDepartureDateTime(route, info.getDepartureDateTime());
-                    if (!exists) {
+                    LocalDateTime time = info.getDepartureDateTime();
+                    fetchedTimes.add(time);
+
+                    // 이미 DB에 존재하는 운헹정보가 아닌경우(변경, 신규)
+                    if (!existingOpMap.containsKey(time)) {
                         operationHelper.saveOperation(info.toEntity(route));
                         inserted++;
                         totalInserted++;
+                        //log.info("➕ [신규] {} → {} [{}] 운행 추가됨", dep.getName(), arr.getName(), time);
+                    } else {
+                        Operation existing = existingOpMap.get(time);
+                        if (!isSame(existing, info)) {
+                            log.warn("🔄 [변경] {} → {} [{}] 운행 변경 감지", dep.getName(), arr.getName(), time);
+                            log.warn("    기존: 회사={}, 타입={}, 소요시간={}, 가격={}",
+                                    existing.getBusCompany(), existing.getBusType(), existing.getDuration(), existing.getPrice());
+                            log.warn("    응답: 회사={}, 타입={}, 소요시간={}, 가격={}",
+                                    info.getBusCompany(), info.getBusType(), info.getDuration(), info.getPrice());
+                        }
                     }
                 }
 
-                log.info("\u2705 [{}] {} - {} (Route ID: {}) 운행정보 {}건 삽입 완료",
-                        targetDate, dep.getName(), arr.getName(), route.getId(), inserted);
+                for (Operation existing : existingOps) {
+                    if (!fetchedTimes.contains(existing.getDepartureDtm())) {
+                        log.warn("❌ [삭제 감지] {} → {} [{}] 운행 사라짐", dep.getName(), arr.getName(), existing.getDuration());
+                    }
+                }
+
+                log.info("✅ [{}] {} - {} (Route ID: {}) 운행정보 {}건 삽입 완료", targetDate, dep.getName(), arr.getName(), route.getId(), inserted);
             }
+
             log.info("🎯 {} - {} 운행정보 전체 동기화 완료: 총 {}건 추가됨", dep.getName(), arr.getName(), totalInserted);
-
         }
-        log.info("🎯🎯운행정보 전체 동기화 완료");
 
+        log.info("🎯🎯 운행정보 전체 동기화 완료");
+    }
+
+    private boolean isSame(Operation op, OperationInfo info) {
+        return op.getBusCompany().equals(info.getBusCompany()) &&
+                op.getBusType().equals(info.getBusType()) &&
+                op.getDuration().equals(info.getDuration()) &&
+                Objects.equals(op.getPrice(), info.getPrice());
     }
 
     private List<OperationInfo> fetchOperations(RouteTarget target, LocalDate date) {
@@ -115,7 +147,7 @@ public class OperationSyncScheduler {
                 String busType = cols.get(2).text().trim();
                 String priceStr = cols.get(3).text().replace(",", "").replace("원", "").trim();
 
-                String busCompany = companyAndDuration.split("\\d", 2)[0].replace("\u00A0", "").trim();
+                String busCompany = companyAndDuration.split("\\d", 2)[0].replace("\\u00A0", "").trim();
                 String duration = companyAndDuration.substring(busCompany.length()).replace("소요 예상", "").trim();
 
                 LocalDateTime departureDateTime = LocalDateTime.parse(
