@@ -1,4 +1,4 @@
-package com.be.bus;
+package com.be.bus.mainserver;
 
 import com.be.bus.global.mail.dto.req.EmptySeatSendMailReqDto;
 import com.be.bus.global.mail.service.SendMailService;
