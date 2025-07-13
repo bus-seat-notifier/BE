@@ -10,7 +10,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication(scanBasePackages = {
 		"com.be.bus.batchserver",
 		"com.be.bus.global",
-		"com.be.bus.domain"
+		"com.be.bus.domain",
+		"com.be.bus.batchserver"   // HEALTHCHECK API
+
 })
 @EnableJpaRepositories(basePackages = "com.be.bus.domain")
 @EntityScan(basePackages = "com.be.bus.domain")
