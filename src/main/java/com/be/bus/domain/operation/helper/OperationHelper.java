@@ -35,4 +35,12 @@ public class OperationHelper {
         LocalDateTime dest = LocalDate.now().plusMonths(1).atTime(23, 59, 59);
         return operationRepository.findByRouteAndDepartureDtmBetween(route, now, dest);
     }
+
+    // 해당 날짜에 존재하는 운행정보 모두 가져오기
+    public List<Operation> findByRouteAndDate(Route route, LocalDate date) {
+        LocalDateTime start = date.atStartOfDay(); // 00:00:00
+        LocalDateTime end = date.atTime(23, 59, 59); // 23:59:59
+        return operationRepository.findByRouteAndDepartureDtmBetween(route, start, end);
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.be.bus;
+package com.be.bus.batchserver;
 
 import com.be.bus.global.mail.dto.req.EmptySeatSendMailReqDto;
 import com.be.bus.global.mail.service.SendMailService;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 
 @RestController
-@RequestMapping("/api/health")
+@RequestMapping("/api/health/batch")
 @RequiredArgsConstructor
 public class HealthCheckController {
     private final SendMailService sendMailService;
@@ -26,10 +26,10 @@ public class HealthCheckController {
                             213
                     )
             );
-            return ResponseEntity.ok("✅ 메일 발송 시도 완료! 버스 가보자고!!");
+            return ResponseEntity.ok("✅ 메일 발송 시도 완료! 버스 가보자고!! in 배치서버");
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.internalServerError().body("❌ 메일 발송 실패: " + e.getMessage());
+            return ResponseEntity.internalServerError().body("❌ 메일 발송 실패 in 배치서버: " + e.getMessage());
         }
     }
 

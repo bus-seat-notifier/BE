@@ -82,3 +82,27 @@ clean {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+// 메인 서버 JAR 생성
+// ./gradlew buildMainJar
+tasks.register('buildMainJar', Jar) {
+	archiveBaseName.set('main-server')
+	manifest {
+		attributes 'Main-Class': 'com.be.bus.mainserver.MainServerApplication'
+	}
+	from sourceSets.main.output
+	dependsOn configurations.runtimeClasspath
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+// 배치 서버 JAR 생성
+// ./gradlew buildBatchJar
+tasks.register('buildBatchJar', Jar) {
+	archiveBaseName.set('batch-server')
+	manifest {
+		attributes 'Main-Class': 'com.be.bus.batchserver.BatchServerApplication'
+	}
+	from sourceSets.main.output
+	dependsOn configurations.runtimeClasspath
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}

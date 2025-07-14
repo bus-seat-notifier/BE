@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface OperationRepository extends JpaRepository<Operation, Long> {
     boolean existsByRouteAndDepartureDtm(Route route, LocalDateTime departureDtm);
-
     List<Operation> findByRouteAndDepartureDtmBetween(Route route, LocalDateTime now, LocalDateTime dest);
+
 
 }

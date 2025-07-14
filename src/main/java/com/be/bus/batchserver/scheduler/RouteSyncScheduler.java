@@ -1,4 +1,4 @@
-package com.be.bus.global.scheduler;
+package com.be.bus.batchserver.scheduler;
 
 import com.be.bus.domain.route.entity.Route;
 import com.be.bus.domain.route.helper.RouteHelper;
@@ -32,7 +32,10 @@ public class RouteSyncScheduler {
 
     private static final String URL = "https://txbus.t-money.co.kr/otck/readTrmlList.do";
 
-    @Scheduled(cron = "0 0 0 1 * *") // 매월 1일 실행
+    // 노선 동기화 스케줄러
+    @Scheduled(cron = "0 0 3 * * *") // 매일 03시 0분 0초 
+    //@Scheduled(fixedDelay = 1000*60*60) // 1시간짜리 즉시실행
+
     @Transactional
     public void syncRoutes() {
         log.info("🚌 노선 동기화 시작!");
@@ -60,6 +63,7 @@ public class RouteSyncScheduler {
                 Optional<Route> optionalRoute = routeHelper.findOptionalByDepartureAndArrival(departureTerminal, arrivalTerminal);
 
                 if (optionalRoute.isEmpty()) {
+                    log.info("➕ [신규 노선] {}({}) → {}({}) 등록됨", dep.trml_Nm(), dep.trml_Cd(), arr.trml_Nm(), arr.trml_Cd());
                     routeHelper.createRoute(departureTerminal, arrivalTerminal);
                     added++;
                 } else if (routeHelper.isTerminalNameChanged(optionalRoute.get(), dep.trml_Nm(), arr.trml_Nm())) {
