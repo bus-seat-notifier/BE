@@ -2,7 +2,7 @@
 <configuration>
 
     <!-- 로그 저장 경로 -->
-    <property name="LOG_PATH" value="./logs"/>
+    <property name="LOG_PATH" value="./log"/>
 
     <!-- 콘솔 로그 출력 -->
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
@@ -11,19 +11,14 @@
         </encoder>
     </appender>
 
-    <!-- 파일 로그 출력 -->
-    <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_PATH}/bus.log</file>
-
-        <!-- 로그를 날짜별로 나눔 + 용량 제한 설정 -->
+    <!-- 날짜별 파일 로그 (압축 없음) -->
+    <appender name="DailyRollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_PATH}/batch.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
-
-            <!-- 하루에 최대 10개 파일까지 -->
+            <!-- 날짜별 파일명: batch.2025-07-17.0.log -->
+            <fileNamePattern>${LOG_PATH}/batch.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>50MB</maxFileSize>
+                <maxFileSize>50MB</maxFileSize> <!-- 하루에 50MB 넘으면 .1, .2 등으로 나뉨 -->
             </timeBasedFileNamingAndTriggeringPolicy>
-
             <maxHistory>14</maxHistory>
             <totalSizeCap>1GB</totalSizeCap>
         </rollingPolicy>
@@ -33,10 +28,10 @@
         </encoder>
     </appender>
 
-    <!-- 로그 레벨 설정 -->
+    <!-- 로그 출력 대상 지정 -->
     <root level="INFO">
-        <appender-ref ref="Console" />
-        <appender-ref ref="RollingFile" />
+        <appender-ref ref="Console"/>
+        <appender-ref ref="DailyRollingFile"/>
     </root>
 
 </configuration>
