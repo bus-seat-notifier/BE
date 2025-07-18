@@ -15,7 +15,7 @@
     <appender name="DailyRollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 날짜별 파일명: batch.2025-07-17.0.log -->
-            <fileNamePattern>${LOG_PATH}/batch.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${LOG_PATH}/batch.%d{yyyy-MM-dd, Asia/Seoul}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>50MB</maxFileSize> <!-- 하루에 50MB 넘으면 .1, .2 등으로 나뉨 -->
             </timeBasedFileNamingAndTriggeringPolicy>
