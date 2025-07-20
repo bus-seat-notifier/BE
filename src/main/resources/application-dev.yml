@@ -55,3 +55,5 @@ jwt:
 oauth2:
   kakao:
     app-admin-key : ${dev.oauth2.kakao.app-admin-key}
+    rest-api-key: ${dev.oauth2.kakao.rest-api-key}
+    redirect-uri: ${dev.oauth2.kakao.redirect-uri}
