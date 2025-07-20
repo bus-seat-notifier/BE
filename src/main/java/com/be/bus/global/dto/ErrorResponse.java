@@ -1,4 +1,4 @@
-package com.be.bus.global.enums;
+package com.be.bus.global.dto;
 
 import com.be.bus.global.enums.ErrorCode;
 import lombok.AccessLevel;

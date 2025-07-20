@@ -1,7 +1,7 @@
 package com.be.bus.global.error.handler;
 
 import com.be.bus.global.enums.ErrorCode;
-import com.be.bus.global.enums.ErrorResponse;
+import com.be.bus.global.dto.ErrorResponse;
 import com.be.bus.global.enums.GlobalErrorCode;
 import com.be.bus.global.error.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
