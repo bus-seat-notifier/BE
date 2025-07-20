@@ -41,6 +41,11 @@ public enum AuthErrorCode implements ErrorCode {
     RECEIVER_MAIL_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 이메일로 전송된 인증번호가 없거나 만료되었습니다."),
 
     /**
+     * 409 Conflict
+     */
+    KAKAO_ALREADY_EXISTS(HttpStatus.CONFLICT, "이미 카카오로 회원가입이 된 유저입니다."),
+
+    /**
      * 500 Internal Server Error
      */
     MAIL_VERIFICATION_ERROR(HttpStatus.INTERNAL_SERVER_ERROR,"인증번호 생성 중 오류가 발생하였습니다.");

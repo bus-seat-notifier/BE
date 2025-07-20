@@ -13,4 +13,6 @@ public interface KakaoSocialRepository extends JpaRepository<KakaoSocial, Long> 
 
     Optional<KakaoSocial> findByKakaoMemberId(Long kakaoMemberId);
     Optional<KakaoSocial> findByUser(User user);
+
+    boolean existsByKakaoMemberId(Long kakaoMemberId);
 }

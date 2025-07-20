@@ -35,12 +35,12 @@ public class JwtFilter extends OncePerRequestFilter {
 
             //auth
             new AntPathRequestMatcher("/api/auth/kakao-login"),
-            new AntPathRequestMatcher("/api/auth/register"),
-            new AntPathRequestMatcher("/api/auth/reissue"),
-            new AntPathRequestMatcher("/api/auth/send-mail"),
-            new AntPathRequestMatcher("/api/auth/check-mail"),
+            new AntPathRequestMatcher("/api/auth/kakao-register"),
+//            new AntPathRequestMatcher("/api/auth/reissue"),
+//            new AntPathRequestMatcher("/api/auth/send-mail"),
+//            new AntPathRequestMatcher("/api/auth/check-mail"),
 
-            //member
+            //user
             new AntPathRequestMatcher("/api/member/profile-image"),
 
             //badge

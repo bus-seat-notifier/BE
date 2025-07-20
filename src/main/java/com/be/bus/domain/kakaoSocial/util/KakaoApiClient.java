@@ -1,4 +1,4 @@
-package com.be.bus.global.utils;
+package com.be.bus.domain.kakaoSocial.util;
 
 import com.be.bus.domain.kakaoSocial.dto.res.UserInfoFromKakaoResDto;
 import org.springframework.cloud.openfeign.FeignClient;

@@ -19,14 +19,14 @@ public class KakaoSocial extends BaseTimeEntity {
     @Column(name = "kakao_social_id")
     private Long id;
 
-    @Column(name = "kakao_member_id", nullable = false)
+    @Column(name = "kakao_member_id", nullable = false, unique = true)
     private Long kakaoMemberId;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public static KakaoSocial createKakaoSocial(Long kakaoMemberId,  User user) {
+    public static KakaoSocial create(Long kakaoMemberId,  User user) {
         return KakaoSocial.builder()
                 .kakaoMemberId(kakaoMemberId)
                 .user(user)
