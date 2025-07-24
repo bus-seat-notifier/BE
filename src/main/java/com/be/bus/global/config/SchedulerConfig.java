@@ -12,7 +12,7 @@ public class SchedulerConfig {
     @Bean
     public ThreadPoolTaskScheduler taskScheduler() {
         ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
-        scheduler.setPoolSize(5); // 동시에 돌 수 있는 스케줄러 수
+        scheduler.setPoolSize(3); // 동시에 돌 수 있는 스케줄러 수
         scheduler.setThreadNamePrefix("scheduler-");
         return scheduler;
     }
