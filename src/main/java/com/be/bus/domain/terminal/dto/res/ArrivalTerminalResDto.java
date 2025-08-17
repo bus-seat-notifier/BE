@@ -1,5 +1,7 @@
 package com.be.bus.domain.terminal.dto.res;
 
+import com.be.bus.domain.route.entity.Route;
+import com.be.bus.domain.terminal.dto.ArrivalTerminalDto;
 import com.be.bus.domain.terminal.dto.TerminalDto;
 import com.be.bus.domain.terminal.entity.Terminal;
 import lombok.AccessLevel;
@@ -9,15 +11,15 @@ import java.util.List;
 
 @Builder(access = AccessLevel.PRIVATE)
 public record ArrivalTerminalResDto(
-        List<TerminalDto> terminalList
+        List<ArrivalTerminalDto> terminalList
 ) {
-    public static ArrivalTerminalResDto of(List<Terminal> allArrivalTerminals) {
-        List<TerminalDto> terminalDtos = allArrivalTerminals.stream()
-                .map(TerminalDto::of)
+    public static ArrivalTerminalResDto of(List<Route> routes) {
+        List<ArrivalTerminalDto> arrivalTerminalDtos = routes.stream()
+                .map(ArrivalTerminalDto::of)
                 .toList();
 
         return ArrivalTerminalResDto.builder()
-                .terminalList(terminalDtos)
+                .terminalList(arrivalTerminalDtos)
                 .build();
     }
 

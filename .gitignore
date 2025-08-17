@@ -42,3 +42,6 @@ application-secret.yml
 
 # 배치 로그 파일 무시
 log/
+
+# generaged
+src/main/resources/generated

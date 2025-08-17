@@ -40,19 +40,15 @@ public class JwtFilter extends OncePerRequestFilter {
 //            new AntPathRequestMatcher("/api/auth/send-mail"),
 //            new AntPathRequestMatcher("/api/auth/check-mail"),
 
-            //user
-            new AntPathRequestMatcher("/api/member/profile-image"),
 
-            //badge
+            // terminal
+            new AntPathRequestMatcher("/api/terminal/departure"),
+            new AntPathRequestMatcher("/api/terminal/arrival"),
 
-            //group
+            // operation
+            new AntPathRequestMatcher("/api/operation/"),
 
-            //stamp
-            new AntPathRequestMatcher("/api/stamp"),
 
-            //send-praise
-            new AntPathRequestMatcher("/api/send-praise/group"),
-            new AntPathRequestMatcher("/api/send-praise/check"),
 
             //receive-praise
             // TODO : POST, DEL은 매치하도록 수정
