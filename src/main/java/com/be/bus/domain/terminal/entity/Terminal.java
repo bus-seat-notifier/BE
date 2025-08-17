@@ -23,7 +23,7 @@ public class Terminal extends BaseTimeEntity {
 
     private String name;
 
-    @Column(name = "area_code", nullable = false)
+    @Column(name = "area_cd", nullable = false)
     private String areaCode;
 
     @Column(name = "departure_yn", nullable = false)
