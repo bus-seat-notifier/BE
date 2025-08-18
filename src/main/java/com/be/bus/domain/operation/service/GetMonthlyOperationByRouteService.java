@@ -20,6 +20,9 @@ public class GetMonthlyOperationByRouteService {
     public MonthlyOperationResDto execute(Long routeId) {
         Route route = routeHelper.findByIdOrElseThrow(routeId);
         List<Operation> monthlyByRoute = operationHelper.findMonthlyByRoute(route);
+        for( Operation operation : monthlyByRoute) {
+            System.out.println("Operation: " + operation.getDepartureDtm() + ", " + operation.getId());
+        }
         return MonthlyOperationResDto.of(monthlyByRoute);
 
     }

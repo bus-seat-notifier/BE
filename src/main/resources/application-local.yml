@@ -12,7 +12,8 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        show_sql: false
+        show_sql: true
+        format_sql: true # SQL을 보기 좋게 정렬합니다.
   cloud:
     aws:
       s3:
@@ -56,3 +57,7 @@ oauth2:
     app-admin-key : ${local.oauth2.kakao.app-admin-key}
     rest-api-key : ${local.oauth2.kakao.rest-api-key}
     redirect-uri: ${local.oauth2.kakao.redirect-uri}
+
+logging:
+  level:
+    org.hibernate.orm.jdbc.bind: trace # 실행되는 SQL 쿼리를 로그로 출력합니다.
