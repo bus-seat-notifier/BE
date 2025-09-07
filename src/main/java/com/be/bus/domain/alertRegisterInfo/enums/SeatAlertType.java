@@ -5,6 +5,7 @@ public enum SeatAlertType {
     WINDOW,     // 창가 좌석
     NUMBERED,   // 특정 좌석 번호
     COUPLE,      // 2인석
+    SINGLE,     // 1인석
     ALL_DAY      // 해당 날짜 전체
 
     }
