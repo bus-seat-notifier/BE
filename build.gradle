@@ -124,6 +124,6 @@ tasks.register('buildBatchJar', Jar) {
 	dependsOn configurations.runtimeClasspath
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
-springBoot { // 동천이오니까임시
-	mainClass = 'com.be.bus.batchserver.BatchServerApplication'
-}
+//springBoot { // 동천이오니까임시
+//	mainClass = 'com.be.bus.batchserver.BatchServerApplication'
+//}
